@@ -34,9 +34,10 @@ GitHub → GitHub Actions → Docker Build → Azure VM
 - **Cloud:** Azure (VMs, VNet, NSG, IPs)
 - **IaC:** Terraform
 - **CI/CD:** GitHub Actions
-- **Contenedores:** Docker
+- **Contenedores:** Docker, K3s (Kubernetes)
 - **Aplicación:** .NET 8.0 (ASP.NET Core)
-- **Web Server:** Nginx
+- **Monitoring:** Prometheus, Grafana
+- **Security:** Trivy, Security Context, Network Policies
 - **OS:** Ubuntu 22.04 LTS
 - **Control de Versiones:** Git
 
@@ -67,6 +68,26 @@ GitHub → GitHub Actions → Docker Build → Azure VM
 - Automatización completa
 - Reproducibilidad
 - Gestión de estado
+
+### [FASE 6 - Kubernetes (K3s)](docs/fase6-kubernetes.md)
+- Instalación de K3s
+- Deployments y Services
+- Escalado y self-healing
+- NodePort para acceso externo
+
+### [FASE 7 - Seguridad (DevSecOps)](docs/fase7-seguridad.md)
+- Escaneo de vulnerabilidades con Trivy
+- Security hardening de Dockerfile
+- Security Context en Kubernetes
+- Network Policies
+- Integración de seguridad en CI/CD
+
+### [FASE 8 - Observabilidad](docs/fase8-observabilidad.md)
+- Prometheus para métricas
+- Grafana para visualización
+- Métricas de aplicación .NET
+- Dashboards personalizados
+- ServiceMonitor y auto-discovery
 
 ---
 
@@ -244,11 +265,12 @@ En GitHub Settings → Secrets:
 
 ## 📊 Métricas del Proyecto
 
-- **Líneas de código:** ~2000+
-- **Archivos de documentación:** 4
+- **Líneas de código:** ~3500+
+- **Archivos de documentación:** 7
 - **Recursos de Azure:** 8
+- **Pods en Kubernetes:** 9
 - **Tiempo de deploy:** ~50 segundos
-- **Fases completadas:** 5/10
+- **Fases completadas:** 8/10
 
 ---
 
@@ -260,11 +282,11 @@ En GitHub Settings → Secrets:
 - [x] FASE 3 - Git Profesional
 - [x] FASE 4 - CI/CD Profesional
 - [x] FASE 5 - Terraform (IaC)
+- [x] FASE 6 - Kubernetes (K3s)
+- [x] FASE 7 - Seguridad (DevSecOps)
+- [x] FASE 8 - Observabilidad (Monitoring)
 
 ### 🔜 Próximamente
-- [ ] FASE 6 - Contenedores y Kubernetes (AKS)
-- [ ] FASE 7 - Seguridad (DevSecOps)
-- [ ] FASE 8 - Observabilidad (Monitoring)
 - [ ] FASE 9 - Arquitectura Senior
 - [ ] FASE 10 - Mentalidad Plataforma
 
