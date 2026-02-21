@@ -6,3 +6,13 @@ obj/
 .vscode/
 *.log
 appsettings.Development.json
+app/miappdevops.tar.gz
+*.tar.gz
+
+# Terraform
+.terraform/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
