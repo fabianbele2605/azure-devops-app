@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: miappdevops
+  labels:
+    app: miappdevops
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: miappdevops
+  template:
+    metadata:
+      labels:
+        app: miappdevops
+    spec:
+      containers:
+      - name: miappdevops
+        image: miappdevops:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
