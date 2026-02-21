@@ -1,0 +1,43 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build Docker image
+      run: |
+        cd app
+        docker build -t miappdevops:${{ github.sha }} .
+        docker tag miappdevops:${{ github.sha }} miappdevops:latest
+
+    - name: Save Docker image
+      run: docker save miappdevops:latest | gzip > app-image.tar.gz
+
+    - name: Deploy to Azure VM
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.VM_HOST }}
+        username: ${{ secrets.VM_USERNAME }}
+        key: ${{ secrets.VM_SSH_KEY }}
+        source: "app-image.tar.gz"
+        target: "/home/azureuser/"
+
+    - name: Run container on VM
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.VM_HOST }}
+        username: ${{ secrets.VM_USERNAME }}
+        key: ${{ secrets.VM_SSH_KEY }}
+        script: |
+          docker load < /home/azureuser/app-image.tar.gz
+          docker stop miappdevops || true
+          docker rm miappdevops || true
+          docker run -d --name miappdevops -p 5000:5000 --restart unless-stopped miappdevops:latest
+          rm /home/azureuser/app-image.tar.gz
