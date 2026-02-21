@@ -1,7 +1,8 @@
 bin/
 obj/
+*.tar.gz
 .git/
 .gitignore
-*.md
+README.md
 Dockerfile
 .dockerignore

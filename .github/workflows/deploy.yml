@@ -17,6 +17,20 @@ jobs:
         docker build -t miappdevops:${{ github.sha }} .
         docker tag miappdevops:${{ github.sha }} miappdevops:latest
 
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'miappdevops:latest'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+        severity: 'CRITICAL,HIGH'
+
+    - name: Upload Trivy results to GitHub Security
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: 'trivy-results.sarif'
+
     - name: Save Docker image
       run: docker save miappdevops:latest | gzip > app-image.tar.gz
 
