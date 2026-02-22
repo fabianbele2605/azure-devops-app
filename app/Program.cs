@@ -30,3 +30,5 @@ app.MapRazorPages();
 app.MapMetrics();
 
 app.Run();
+
+public partial class Program { }

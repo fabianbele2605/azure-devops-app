@@ -1,7 +1,9 @@
-name: CI/CD Pipeline
+name: CI/CD Pipeline Professional
 
 on:
   push:
+    branches: [ main ]
+  pull_request:
     branches: [ main ]
 
 permissions:
@@ -9,46 +11,99 @@ permissions:
   security-events: write
 
 jobs:
-  build-and-deploy:
+  test:
+    name: Run Tests
     runs-on: ubuntu-latest
-
+    
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v4.1.1
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4.0.0
+      with:
+        dotnet-version: '8.0.x'
+    
+    - name: Restore dependencies
+      run: |
+        cd app
+        dotnet restore
+    
+    - name: Build
+      run: |
+        cd app
+        dotnet build --no-restore
+    
+    - name: Run tests
+      run: |
+        cd app
+        dotnet test --no-build --verbosity normal
 
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4.1.1
+    
     - name: Build Docker image
       run: |
         cd app
         docker build -t miappdevops:${{ github.sha }} .
         docker tag miappdevops:${{ github.sha }} miappdevops:latest
-
+    
     - name: Run Trivy vulnerability scanner
-      uses: aquasecurity/trivy-action@master
+      uses: aquasecurity/trivy-action@0.16.1
       with:
         image-ref: 'miappdevops:latest'
         format: 'sarif'
         output: 'trivy-results.sarif'
         severity: 'CRITICAL,HIGH'
-
+        exit-code: '1'  # Fallar si encuentra vulnerabilidades
+    
     - name: Upload Trivy results to GitHub Security
-      uses: github/codeql-action/upload-sarif@v3
+      uses: github/codeql-action/upload-sarif@v3.24.0
       if: always()
       with:
         sarif_file: 'trivy-results.sarif'
-
+    
     - name: Save Docker image
+      if: success()
       run: docker save miappdevops:latest | gzip > app-image.tar.gz
+    
+    - name: Upload artifact
+      if: success()
+      uses: actions/upload-artifact@v4.3.1
+      with:
+        name: docker-image
+        path: app-image.tar.gz
+        retention-days: 1
 
+  deploy:
+    name: Deploy to Azure VM
+    runs-on: ubuntu-latest
+    needs: security-scan
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v4.1.2
+      with:
+        name: docker-image
+    
     - name: Deploy to Azure VM
-      uses: appleboy/scp-action@master
+      uses: appleboy/scp-action@v0.1.7
       with:
         host: ${{ secrets.VM_HOST }}
         username: ${{ secrets.VM_USERNAME }}
         key: ${{ secrets.VM_SSH_KEY }}
         source: "app-image.tar.gz"
         target: "/home/azureuser/"
-
+    
     - name: Run container on VM
-      uses: appleboy/ssh-action@master
+      uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.VM_HOST }}
         username: ${{ secrets.VM_USERNAME }}
