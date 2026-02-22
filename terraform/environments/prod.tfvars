@@ -1,0 +1,5 @@
+resource_group_name     = "rg-devops-prod"
+location                = "westus2"
+vm_size                 = "Standard_D2s_v5"
+admin_username          = "azureuser"
+environment             = "prod"

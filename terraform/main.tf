@@ -43,7 +43,7 @@ resource "azurerm_network_security_group" "main" {
         protocol                     = "Tcp"
         source_port_range            = "*"
         destination_port_range       = "22"
-        source_address_prefix        = "*"
+        source_address_prefix        = var.allowed_ip
         destination_address_prefix   = "*"
     }
 
@@ -55,7 +55,7 @@ resource "azurerm_network_security_group" "main" {
         protocol                    = "Tcp"
         source_port_range           = "*"
         destination_port_range      = "80"
-        source_address_prefix       = "*"
+        source_address_prefix       = var.allowed_ip
         destination_address_prefix  = "*"
 
     }
@@ -68,7 +68,43 @@ resource "azurerm_network_security_group" "main" {
         protocol                    = "Tcp"
         source_port_range           = "*"
         destination_port_range      = "5000"
-        source_address_prefix       = "*"
+        source_address_prefix       = var.allowed_ip
+        destination_address_prefix  = "*"
+    }
+
+    security_rule {
+        name                        = "AllowK8sApp"
+        priority                    = 1003
+        direction                   = "Inbound"
+        access                      = "Allow"
+        protocol                    = "Tcp"
+        source_port_range           = "*"
+        destination_port_range      = "30080"
+        source_address_prefix       = var.allowed_ip
+        destination_address_prefix  = "*"
+    }
+
+    security_rule {
+        name                        = "AllowGrafana"
+        priority                    = 1004
+        direction                   = "Inbound"
+        access                      = "Allow"
+        protocol                    = "Tcp"
+        source_port_range           = "*"
+        destination_port_range      = "30030"
+        source_address_prefix       = var.allowed_ip
+        destination_address_prefix  = "*"
+    }
+
+    security_rule {
+        name                        = "AllowPrometheus"
+        priority                    = 1005
+        direction                   = "Inbound"
+        access                      = "Allow"
+        protocol                    = "Tcp"
+        source_port_range           = "*"
+        destination_port_range      = "30090"
+        source_address_prefix       = var.allowed_ip
         destination_address_prefix  = "*"
     }
 }

@@ -21,3 +21,15 @@ variable "admin_username" {
     type          = string
     default       = "azureuser"
 }
+
+variable "environment" {
+    description   = "Environment (dev/prod)"
+    type          = string
+    default       = "dev"
+}
+
+variable "allowed_ip" {
+    description     = "IP permitido para acceso SSH/HTTP"
+    type            = string
+    default         = "190.84.117.210/32"
+}

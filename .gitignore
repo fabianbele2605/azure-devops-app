@@ -16,3 +16,9 @@ app/miappdevops.tar.gz
 .terraform/
 *.tfstate
 *.tfstate.backup
+
+# Archivos tar.gz temporales
+*.tar.gz
+
+# Terraform providers
+.terraform/
