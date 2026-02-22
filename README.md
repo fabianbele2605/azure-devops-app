@@ -89,6 +89,18 @@ GitHub → GitHub Actions → Docker Build → Azure VM
 - Dashboards personalizados
 - ServiceMonitor y auto-discovery
 
+### [FASE 9 - Arquitectura (Microservicios)](docs/fase9-arquitectura.md)
+- Microservicio Backend API
+- Separación Frontend/Backend
+- Comunicación entre servicios
+- Despliegue independiente
+
+### [FASE 10 - Mentalidad Plataforma](docs/guia-desarrollador.md)
+- Platform Engineering
+- Guía del desarrollador
+- Golden Paths
+- Self-service infrastructure
+
 ---
 
 ## 🚀 Quick Start
@@ -265,12 +277,13 @@ En GitHub Settings → Secrets:
 
 ## 📊 Métricas del Proyecto
 
-- **Líneas de código:** ~3500+
-- **Archivos de documentación:** 7
+- **Líneas de código:** ~4500+
+- **Archivos de documentación:** 10
+- **Microservicios:** 2 (Frontend + Backend)
 - **Recursos de Azure:** 8
-- **Pods en Kubernetes:** 9
+- **Pods en Kubernetes:** 11
 - **Tiempo de deploy:** ~50 segundos
-- **Fases completadas:** 8/10
+- **Fases completadas:** 10/10 🎉
 
 ---
 
@@ -285,10 +298,8 @@ En GitHub Settings → Secrets:
 - [x] FASE 6 - Kubernetes (K3s)
 - [x] FASE 7 - Seguridad (DevSecOps)
 - [x] FASE 8 - Observabilidad (Monitoring)
-
-### 🔜 Próximamente
-- [ ] FASE 9 - Arquitectura Senior
-- [ ] FASE 10 - Mentalidad Plataforma
+- [x] FASE 9 - Arquitectura (Microservicios)
+- [x] FASE 10 - Mentalidad Plataforma
 
 ---
 
