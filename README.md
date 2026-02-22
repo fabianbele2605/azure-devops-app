@@ -36,8 +36,9 @@ GitHub → GitHub Actions → Docker Build → Azure VM
 - **CI/CD:** GitHub Actions
 - **Contenedores:** Docker, K3s (Kubernetes)
 - **Aplicación:** .NET 8.0 (ASP.NET Core)
-- **Monitoring:** Prometheus, Grafana
-- **Security:** Trivy, Security Context, Network Policies
+- **Monitoring:** Prometheus, Grafana, AlertManager
+- **Security:** Trivy, Security Context, Network Policies, Azure Key Vault
+- **Secrets:** Azure Key Vault con Managed Identity
 - **OS:** Ubuntu 22.04 LTS
 - **Control de Versiones:** Git
 
@@ -100,6 +101,30 @@ GitHub → GitHub Actions → Docker Build → Azure VM
 - Guía del desarrollador
 - Golden Paths
 - Self-service infrastructure
+
+### [FASE 11 - Terraform Profesional](docs/fase11-terraform-profesional.md)
+- Remote backend en Azure Storage
+- State locking con Azure Blob
+- Entornos separados (dev/prod)
+- NSG restringido por IP
+
+### [FASE 12 - CI/CD Profesional](docs/fase12-cicd-profesional.md)
+- Pipeline multi-stage (test → security-scan → deploy)
+- Tests con xUnit
+- Trivy security scanning
+- Versiones pinneadas de actions
+
+### [FASE 13 - Kubernetes Producción](docs/fase13-kubernetes-produccion.md)
+- Tags inmutables (v1.0.0)
+- HorizontalPodAutoscaler (HPA)
+- PodDisruptionBudget (PDB)
+- Resource requests y limits
+
+### [FASE 14 - Seguridad y Observabilidad](docs/fase14-seguridad-observabilidad.md)
+- Alertas con Prometheus/AlertManager
+- PrometheusRule personalizado
+- Azure Key Vault para secrets
+- Managed Identity sin credenciales
 
 ---
 
@@ -277,13 +302,15 @@ En GitHub Settings → Secrets:
 
 ## 📊 Métricas del Proyecto
 
-- **Líneas de código:** ~4500+
-- **Archivos de documentación:** 10
+- **Líneas de código:** ~5000+
+- **Archivos de documentación:** 14
 - **Microservicios:** 2 (Frontend + Backend)
-- **Recursos de Azure:** 8
-- **Pods en Kubernetes:** 11
-- **Tiempo de deploy:** ~50 segundos
-- **Fases completadas:** 10/10 🎉
+- **Recursos de Azure:** 9 (+ Key Vault)
+- **Pods en Kubernetes:** 20 (+ AlertManager)
+- **Alertas configuradas:** 2 (PodDown, InsufficientPods)
+- **Secrets gestionados:** 2 (db-password, api-key)
+- **Tiempo de deploy:** ~2 minutos
+- **Fases completadas:** 14/14 🎉
 
 ---
 
@@ -300,6 +327,10 @@ En GitHub Settings → Secrets:
 - [x] FASE 8 - Observabilidad (Monitoring)
 - [x] FASE 9 - Arquitectura (Microservicios)
 - [x] FASE 10 - Mentalidad Plataforma
+- [x] FASE 11 - Terraform Profesional (Remote Backend)
+- [x] FASE 12 - CI/CD Profesional (Multi-stage Pipeline)
+- [x] FASE 13 - Kubernetes Producción (HPA, PDB)
+- [x] FASE 14 - Seguridad y Observabilidad (Alertas + Key Vault)
 
 ---
 
@@ -369,4 +400,4 @@ Este proyecto es de código abierto y está disponible bajo la licencia MIT.
 
 ---
 
-*Última actualización: 21 Feb 2026*
+*Última actualización: 22 Feb 2026*
