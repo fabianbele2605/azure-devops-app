@@ -33,3 +33,17 @@ variable "allowed_ip" {
     type            = string
     default         = "190.84.117.210/32"
 }
+
+variable "db_password" {
+    description   = "Database password"
+    type          = string
+    sensitive     = true
+    default       = "MySecurePassword123!"
+}
+
+variable "api_key" {
+    description   = "API Key for external services"
+    type          = string
+    sensitive     = true
+    default       = "sk-1234567890abcdef"
+}

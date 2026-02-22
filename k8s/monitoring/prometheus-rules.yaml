@@ -1,0 +1,31 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: miappdevops-alerts
+  namespace: monitoring
+  labels:
+    prometheus: kube-prometheus
+    role: alert-rules
+    release: prometheus 
+spec:
+  groups:
+  - name: application_alerts
+    interval: 30s
+    rules:
+    - alert: PodDown
+      expr: up{job="miappdevops-metrics"} == 0
+      for: 1m
+      labels:
+        severity: critical
+      annotations:
+        summary: "Pod está caído"
+        description: "El pod no responde desde hace más de 1 minuto."
+    
+    - alert: InsufficientPods
+      expr: count(up{job="miappdevops-metrics"} == 1) < 2
+      for: 1m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Menos de 2 pods activos"
+        description: "Solo hay pocos pods activos."

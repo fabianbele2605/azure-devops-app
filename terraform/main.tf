@@ -140,6 +140,11 @@ resource "azurerm_linux_virtual_machine" "main" {
         azurerm_network_interface.main.id
     ]
 
+    # Managed Identity para acceder a Key Vault
+    identity {
+        type = "SystemAssigned"
+    }
+
     admin_ssh_key {
         username       = var.admin_username
         public_key       = file("~/.ssh/id_rsa.pub")
